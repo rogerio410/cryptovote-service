@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package voteservice;
+
+// output folder for .pb.go and package name
+option go_package = "github.com/rogerio410/cryptovote-service/pkg/pb/voteservice;voteservice";
+
+service VoteService{
+    rpc UpVote(VoteRequest) returns (VoteResponse) {}
+    rpc DownVote(VoteRequest) returns (VoteResponse) {}
+}
+
+message VoteRequest{
+    string symbol = 1;
+}
+
+message VoteResponse{
+    bool response = 1;
+}
+
