@@ -7,7 +7,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/rogerio410/cryptovote-service/internal/services"
+	"github.com/rogerio410/cryptovote-service/internal/presentation"
 	"github.com/rogerio410/cryptovote-service/pkg/pb/voteservice"
 	"google.golang.org/grpc"
 )
@@ -24,7 +24,7 @@ func main() {
 
 	initializeListener()
 
-	voteservice.RegisterVoteServiceServer(server, &services.VoteService{})
+	voteservice.RegisterVoteServiceServer(server, &presentation.VoteService{})
 
 	if err := server.Serve(listener); err != nil {
 		panic("Failed to start gRPC Service")
