@@ -36,11 +36,6 @@ func (vs VoteService) DownVote(ctx context.Context, req *pb.VoteRequest) (*pb.Vo
 }
 
 func (vs VoteService) GetAllCripto(ctx context.Context, req *pb.GetAllCriptoRequest) (*pb.GetAllCriptoResponse, error) {
-	// cryptos := []*pb.Cryptocurrency{
-	// 	{Symbol: "BTC", Name: "Bitcoin"},
-	// 	{Symbol: "ETH", Name: "Ethereum"},
-	// }
-
 	cryptos, err := vs.Application.Queries.AllCrypto.Execute(ctx)
 
 	if err != nil {

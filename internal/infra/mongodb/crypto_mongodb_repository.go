@@ -4,20 +4,31 @@ import (
 	"context"
 
 	"github.com/rogerio410/cryptovote-service/internal/domain"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type MongoDBCryptoRepository struct {
+	mongoClient *mongo.Client
 }
 
-func NewMongoDBCryptoRepository() *MongoDBCryptoRepository {
-	return &MongoDBCryptoRepository{}
+func NewMongoDBCryptoRepository(mongoClient *mongo.Client) *MongoDBCryptoRepository {
+	return &MongoDBCryptoRepository{mongoClient: mongoClient}
 }
 
 func (m MongoDBCryptoRepository) GetAll(ctx context.Context) ([]domain.Cryptocurrency, error) {
-	cryptos := []domain.Cryptocurrency{
-		{Symbol: "BTC", Name: "Bitcoin"},
-		{Symbol: "ETH", Name: "Ethereum"},
-		{Symbol: "ADA", Name: "Cardano"},
+
+	cryptoCollection := m.mongoClient.Database("cryptovote").Collection("cryptos")
+
+	cursor, err := cryptoCollection.Find(ctx, bson.D{})
+
+	if err != nil {
+		panic(err)
+	}
+	var cryptos []domain.Cryptocurrency
+
+	if err = cursor.All(ctx, &cryptos); err != nil {
+		panic(err)
 	}
 
 	return cryptos, nil
