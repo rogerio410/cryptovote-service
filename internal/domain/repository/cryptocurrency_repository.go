@@ -8,8 +8,9 @@ import (
 
 type CryptocurrencyRepository interface {
 	GetAll(ctx context.Context) ([]domain.Cryptocurrency, error)
+	GetCurrencyBySymbol(ctx context.Context, symbol string) (domain.Cryptocurrency, error)
 	// GetOne(ctx context.Context, symbol string) (*domain.Cryptocurrency, error)
-	// AddVote(ctx context.Context, vote domain.Vote) error
+	// SaveVote(ctx context.Context, vote domain.Vote) error
 	// UpdateVote(ctx context.Context, voteID string, newValue bool) error
 	// RemoveVote(ctx context.Context, voteID string) error
 }

@@ -9,8 +9,8 @@ import "voteservice/messages.proto";
 
 service VoteService{
     rpc GetAllCripto(GetAllCriptoRequest) returns (GetAllCriptoResponse) {}
-    rpc UpVote(VoteRequest) returns (VoteResponse) {}
-    rpc DownVote(VoteRequest) returns (VoteResponse) {}
+    rpc Vote(VoteRequest) returns (VoteResponse) {}
+    rpc RemoveVote(RemoveVoteRequest) returns (RemoveVoteResponse) {}
 }
 
 

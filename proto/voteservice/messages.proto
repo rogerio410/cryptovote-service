@@ -17,9 +17,23 @@ message GetAllCriptoResponse{
 }
 
 message VoteRequest{
+    enum Value{
+        UP = 0;
+        DOWN = 1;
+    };
+
     string symbol = 1;
+    Value value = 2;
 }
 
 message VoteResponse{
+    bool response = 1;
+}
+
+message RemoveVoteRequest{
+    string symbol = 1;
+}
+
+message RemoveVoteResponse{
     bool response = 1;
 }

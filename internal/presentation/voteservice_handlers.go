@@ -13,10 +13,17 @@ type VoteService struct {
 	Application application.Application
 }
 
-func (vs VoteService) UpVote(ctx context.Context, req *pb.VoteRequest) (*pb.VoteResponse, error) {
+func (vs VoteService) Vote(ctx context.Context, req *pb.VoteRequest) (*pb.VoteResponse, error) {
 	if req.Symbol == "" {
 		err := status.New(codes.InvalidArgument, "Crypto Symbol cannot be empty").Err()
 		return nil, err
+	}
+
+	value := req.Value.String()
+
+	if err := vs.Application.Commands.Vote.Execute(ctx, req.Symbol, value); err != nil {
+		result_err := status.New(codes.InvalidArgument, err.Error()).Err()
+		return nil, result_err
 	}
 
 	response := &pb.VoteResponse{Response: true}
@@ -24,13 +31,13 @@ func (vs VoteService) UpVote(ctx context.Context, req *pb.VoteRequest) (*pb.Vote
 	return response, nil
 }
 
-func (vs VoteService) DownVote(ctx context.Context, req *pb.VoteRequest) (*pb.VoteResponse, error) {
+func (vs VoteService) RemoveVote(ctx context.Context, req *pb.RemoveVoteRequest) (*pb.RemoveVoteResponse, error) {
 	if req.Symbol == "" {
 		err := status.New(codes.InvalidArgument, "Crypto Symbol cannot be empty").Err()
 		return nil, err
 	}
 
-	response := &pb.VoteResponse{Response: false}
+	response := &pb.RemoveVoteResponse{Response: false}
 
 	return response, nil
 }

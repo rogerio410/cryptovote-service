@@ -1,6 +1,6 @@
 package domain
 
 type Vote struct {
-	User User
-	Vote bool
+	User User `bson:"user,omitempty"`
+	Vote bool `bson:"vote,omitempty"`
 }

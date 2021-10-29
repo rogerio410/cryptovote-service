@@ -1,5 +1,5 @@
 package domain
 
 type User struct {
-	name string
+	name string `bson:"name,omitempty"`
 }

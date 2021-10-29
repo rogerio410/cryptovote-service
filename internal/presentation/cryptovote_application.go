@@ -6,6 +6,7 @@ import (
 	"log"
 
 	app "github.com/rogerio410/cryptovote-service/internal/application"
+	"github.com/rogerio410/cryptovote-service/internal/application/command"
 	"github.com/rogerio410/cryptovote-service/internal/application/query"
 	"github.com/rogerio410/cryptovote-service/internal/infra/mongodb"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -23,6 +24,9 @@ func NewCryptoApplication(ctx context.Context) app.Application {
 	application := app.Application{
 		Queries: app.Queries{
 			AllCrypto: query.NewGetAllCriptoQuery(cryptoRepo),
+		},
+		Commands: app.Commands{
+			Vote: command.NewVoteCommand(cryptoRepo),
 		},
 	}
 
