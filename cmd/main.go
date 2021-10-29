@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"os"
@@ -24,13 +25,22 @@ func main() {
 
 	initializeListener()
 
-	voteservice.RegisterVoteServiceServer(server, &presentation.VoteService{})
+	// Create new CryptAppp with all Dependencies
+	ctx := context.Background()
+	application := presentation.NewCryptoApplication(ctx)
+	vs := &presentation.VoteService{
+		Application: application,
+	}
+
+	voteservice.RegisterVoteServiceServer(server, vs)
+
+	go signalsListener(server)
 
 	if err := server.Serve(listener); err != nil {
 		panic("Failed to start gRPC Service")
 	}
 
-	fmt.Println("Server OK")
+	fmt.Println("Server Clean Stop OK")
 
 }
 

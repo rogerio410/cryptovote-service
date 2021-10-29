@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package voteservice;
+
+option go_package = "github.com/rogerio410/cryptovote-service/pkg/pb/voteservice;voteservice";
+
+message Cryptocurrency{
+    string symbol = 1;
+    string name = 2;
+}
+
+message GetAllCriptoRequest{
+}
+
+message GetAllCriptoResponse{
+    repeated Cryptocurrency cryptocurrencies = 1;
+}
+
+message VoteRequest{
+    string symbol = 1;
+}
+
+message VoteResponse{
+    bool response = 1;
+}
