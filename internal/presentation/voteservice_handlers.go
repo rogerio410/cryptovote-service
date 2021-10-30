@@ -68,7 +68,7 @@ func (vs VoteService) GetAllCripto(ctx context.Context, req *pb.GetAllCriptoRequ
 	// Manual converting from model.CryptoCurrency to pb.CryptoCurrency
 	pb_cryptos := make([]*pb.Cryptocurrency, len(cryptos))
 	for i, v := range cryptos {
-		pb_cryptos[i] = &pb.Cryptocurrency{Symbol: v.Symbol, Name: v.Name}
+		pb_cryptos[i] = &pb.Cryptocurrency{Symbol: v.Symbol, Name: v.Name, Votes: v.Votes}
 	}
 
 	response := &pb.GetAllCriptoResponse{Cryptocurrencies: pb_cryptos}

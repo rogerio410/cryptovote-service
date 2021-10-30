@@ -8,3 +8,11 @@ type Vote struct {
 	CryptoID primitive.ObjectID `bson:"crypto_id,omitempty"`
 	Vote     string             `bson:"vote,omitempty"`
 }
+
+func (v Vote) IsUpVote() bool {
+	return v.Vote == "UP"
+}
+
+func (v Vote) IsDownVote() bool {
+	return !v.IsUpVote()
+}

@@ -7,6 +7,7 @@ option go_package = "github.com/rogerio410/cryptovote-service/pkg/pb/voteservice
 message Cryptocurrency{
     string symbol = 1;
     string name = 2;
+    int32 votes = 3;
 }
 
 message GetAllCriptoRequest{

@@ -21,14 +21,8 @@ func (m MongoDBCryptoRepository) GetAll(ctx context.Context) ([]domain.Cryptocur
 
 	cryptoCollection := m.mongoClient.Database("cryptovote").Collection("cryptos")
 
-	// projection := bson.D{
-	// 	// {Key: "votes", Value: 0},
-	// 	{Key: "name", Value: 1},
-	// 	{Key: "symbol", Value: 1},
-	// }
 	cursor, err := cryptoCollection.Find(
 		ctx, bson.D{},
-		// options.Find().SetProjection(projection),
 	)
 
 	if err != nil {
@@ -60,8 +54,8 @@ func (m MongoDBCryptoRepository) GetVoteByCryptoAndUser(ctx context.Context, cry
 	voteCollection := m.mongoClient.Database("cryptovote").Collection("votes")
 
 	filter := bson.M{
-		"crypto": bson.M{"$eq": crypto.ID},
-		"user":   bson.M{"$eq": user.ID},
+		"crypto_id": bson.M{"$eq": crypto.ID},
+		"user_id":   bson.M{"$eq": user.ID},
 	}
 
 	result := voteCollection.FindOne(ctx, filter)
@@ -77,19 +71,19 @@ func (m MongoDBCryptoRepository) AddVote(ctx context.Context, vote domain.Vote) 
 	voteCollection := m.mongoClient.Database("cryptovote").Collection("votes")
 
 	filter := bson.M{
-		"crypto": bson.M{"$eq": vote.CryptoID},
-		"user":   bson.M{"$eq": vote.UserID},
+		"crypto_id": bson.M{"$eq": vote.CryptoID},
+		"user_id":   bson.M{"$eq": vote.UserID},
 	}
 	data := bson.M{
 		"$set": bson.M{
-			"crypto": vote.CryptoID,
-			"user":   vote.UserID,
-			"vote":   vote.Vote,
+			"crypto_id": vote.CryptoID,
+			"user_id":   vote.UserID,
+			"vote":      vote.Vote,
 		},
 	}
 
 	upsert := true
-	_, err := voteCollection.UpdateOne(
+	result, err := voteCollection.UpdateOne(
 		ctx,
 		filter,
 		data,
@@ -100,19 +94,63 @@ func (m MongoDBCryptoRepository) AddVote(ctx context.Context, vote domain.Vote) 
 		return err
 	}
 
+	// Update votes count into
+	if result.MatchedCount == 0 { // New Vote
+		if vote.IsUpVote() {
+			m.incUpVote(ctx, vote, 1)
+		} else {
+			m.incUpVote(ctx, vote, -1)
+		}
+	} else {
+		if result.ModifiedCount == 1 {
+			if vote.IsUpVote() {
+				m.incUpVote(ctx, vote, 2)
+			} else {
+				m.incUpVote(ctx, vote, -2)
+			}
+		}
+	}
+
 	return nil
+}
+
+func (m MongoDBCryptoRepository) incUpVote(ctx context.Context, vote domain.Vote, value int32) {
+	cryptoCollection := m.mongoClient.Database("cryptovote").Collection("cryptos")
+
+	filter := bson.M{
+		"_id": bson.M{"$eq": vote.CryptoID},
+	}
+	data := bson.M{
+		"$inc": bson.M{
+			"votes": value,
+		},
+	}
+
+	cryptoCollection.UpdateOne(
+		ctx,
+		filter,
+		data,
+	)
+
 }
 
 func (m MongoDBCryptoRepository) RemoveVote(ctx context.Context, vote domain.Vote) error {
 	voteCollection := m.mongoClient.Database("cryptovote").Collection("votes")
-
 	filter := bson.M{
 		"_id": vote.ID,
 	}
-	_, err := voteCollection.DeleteOne(ctx, filter)
+	result, err := voteCollection.DeleteOne(ctx, filter)
 
 	if err != nil {
 		return err
+	}
+
+	if result.DeletedCount == 1 {
+		if vote.IsUpVote() {
+			m.incUpVote(ctx, vote, -1)
+		} else {
+			m.incUpVote(ctx, vote, 1)
+		}
 	}
 
 	return nil

@@ -6,5 +6,5 @@ type Cryptocurrency struct {
 	ID     primitive.ObjectID `bson:"_id,omitempty"`
 	Symbol string             `bson:"symbol,omitempty"`
 	Name   string             `bson:"name,omitempty"`
-	Votes  []Vote             `bson:"votes,omitempty"`
+	Votes  int32              `bson:"votes,omitempty"`
 }
