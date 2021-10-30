@@ -8,9 +8,10 @@ option go_package = "github.com/rogerio410/cryptovote-service/pkg/pb/voteservice
 import "voteservice/messages.proto";
 
 service VoteService{
-    rpc GetAllCripto(GetAllCriptoRequest) returns (GetAllCriptoResponse) {}
+    rpc GetCryptoVotes(GetAllCryptoRequest) returns (GetAllCryptoResponse) {}
     rpc Vote(VoteRequest) returns (VoteResponse) {}
     rpc RemoveVote(RemoveVoteRequest) returns (RemoveVoteResponse) {}
+    rpc GetCryptoVotesStream(CryptoVotesRequest) returns (stream CryptoVotesResponse) {}
 }
 
 

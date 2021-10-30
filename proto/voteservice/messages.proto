@@ -10,11 +10,17 @@ message Cryptocurrency{
     int32 votes = 3;
 }
 
-message GetAllCriptoRequest{
+message GetAllCryptoRequest{
 }
 
-message GetAllCriptoResponse{
+message GetAllCryptoResponse{
     repeated Cryptocurrency cryptocurrencies = 1;
+}
+
+message CryptoVotesRequest{}
+
+message CryptoVotesResponse{
+    repeated Cryptocurrency cryptocurrencies = 1; 
 }
 
 message VoteRequest{

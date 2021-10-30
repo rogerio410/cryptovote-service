@@ -14,22 +14,25 @@ import (
 )
 
 var (
-	server   *grpc.Server
-	listener net.Listener
+	server       *grpc.Server
+	listener     net.Listener
+	globalCancel context.CancelFunc
+	gctx         context.Context
 )
 
 func main() {
 	fmt.Println("Hello Go")
-
 	server = grpc.NewServer()
 
 	initializeListener()
 
 	// Create new CryptAppp with all Dependencies
 	ctx := context.Background()
+	gctx, globalCancel = context.WithCancel(ctx)
 	application := presentation.NewCryptoApplication(ctx)
-	vs := &presentation.VoteService{
+	vs := &presentation.VoteServiceServer{
 		Application: application,
+		Ctx:         gctx,
 	}
 
 	voteservice.RegisterVoteServiceServer(server, vs)
@@ -67,5 +70,6 @@ func signalsListener(server *grpc.Server) {
 	signal.Notify(sigs, os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
 	_ = <-sigs
 
+	globalCancel()
 	server.GracefulStop()
 }

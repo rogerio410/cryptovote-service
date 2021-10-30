@@ -2,6 +2,8 @@ package presentation
 
 import (
 	"context"
+	"log"
+	"time"
 
 	"github.com/rogerio410/cryptovote-service/internal/application"
 	pb "github.com/rogerio410/cryptovote-service/pkg/pb/voteservice"
@@ -9,11 +11,12 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-type VoteService struct {
+type VoteServiceServer struct {
 	Application application.Application
+	Ctx         context.Context
 }
 
-func (vs VoteService) Vote(ctx context.Context, req *pb.VoteRequest) (*pb.VoteResponse, error) {
+func (vs VoteServiceServer) Vote(ctx context.Context, req *pb.VoteRequest) (*pb.VoteResponse, error) {
 	if req.Symbol == "" {
 		err := status.New(codes.InvalidArgument, "Crypto Symbol cannot be empty").Err()
 		return nil, err
@@ -36,7 +39,7 @@ func (vs VoteService) Vote(ctx context.Context, req *pb.VoteRequest) (*pb.VoteRe
 	return response, nil
 }
 
-func (vs VoteService) RemoveVote(ctx context.Context, req *pb.RemoveVoteRequest) (*pb.RemoveVoteResponse, error) {
+func (vs VoteServiceServer) RemoveVote(ctx context.Context, req *pb.RemoveVoteRequest) (*pb.RemoveVoteResponse, error) {
 	if req.Symbol == "" {
 		err := status.New(codes.InvalidArgument, "Crypto Symbol cannot be empty").Err()
 		return nil, err
@@ -57,7 +60,8 @@ func (vs VoteService) RemoveVote(ctx context.Context, req *pb.RemoveVoteRequest)
 	return response, nil
 }
 
-func (vs VoteService) GetAllCripto(ctx context.Context, req *pb.GetAllCriptoRequest) (*pb.GetAllCriptoResponse, error) {
+func (vs VoteServiceServer) GetCryptoVotes(ctx context.Context, req *pb.GetAllCryptoRequest) (*pb.GetAllCryptoResponse, error) {
+
 	cryptos, err := vs.Application.Queries.AllCrypto.Execute(ctx)
 
 	if err != nil {
@@ -71,7 +75,34 @@ func (vs VoteService) GetAllCripto(ctx context.Context, req *pb.GetAllCriptoRequ
 		pb_cryptos[i] = &pb.Cryptocurrency{Symbol: v.Symbol, Name: v.Name, Votes: v.Votes}
 	}
 
-	response := &pb.GetAllCriptoResponse{Cryptocurrencies: pb_cryptos}
+	response := &pb.GetAllCryptoResponse{Cryptocurrencies: pb_cryptos}
 
 	return response, nil
+}
+
+func (vs VoteServiceServer) GetCryptoVotesStream(req *pb.CryptoVotesRequest, stream pb.VoteService_GetCryptoVotesStreamServer) error {
+
+	for {
+		cryptos, err := vs.Application.Queries.AllCrypto.Execute(vs.Ctx)
+
+		if err != nil {
+			log.Fatalln(err)
+			break
+			// return err
+		}
+
+		// Manual converting from model.CryptoCurrency to pb.CryptoCurrency
+		pb_cryptos := make([]*pb.Cryptocurrency, len(cryptos))
+		for i, v := range cryptos {
+			pb_cryptos[i] = &pb.Cryptocurrency{Symbol: v.Symbol, Name: v.Name, Votes: v.Votes}
+		}
+
+		response := &pb.CryptoVotesResponse{Cryptocurrencies: pb_cryptos}
+		stream.Send(response)
+
+		time.Sleep(time.Second * 5)
+		log.Println("Sending data")
+	}
+
+	return nil
 }
