@@ -1,6 +1,9 @@
 package domain
 
+import "go.mongodb.org/mongo-driver/bson/primitive"
+
 type Vote struct {
-	User User `bson:"user,omitempty"`
-	Vote bool `bson:"vote,omitempty"`
+	ID   primitive.ObjectID `bson:"_id,omitempty"`
+	User primitive.ObjectID `bson:"user,omitempty"`
+	Vote string             `bson:"vote,omitempty"`
 }

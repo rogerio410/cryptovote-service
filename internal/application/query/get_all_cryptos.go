@@ -8,10 +8,10 @@ import (
 )
 
 type GetAllCriptoQuery struct {
-	cryptoRepository repository.CryptocurrencyRepository
+	cryptoRepository repository.CryptoRepository
 }
 
-func NewGetAllCriptoQuery(cryptoRepository repository.CryptocurrencyRepository) GetAllCriptoQuery {
+func NewGetAllCriptoQuery(cryptoRepository repository.CryptoRepository) GetAllCriptoQuery {
 	if cryptoRepository == nil {
 		panic("Must provide a Cryptocurrency Repository")
 	}

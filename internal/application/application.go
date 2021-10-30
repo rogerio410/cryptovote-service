@@ -15,5 +15,6 @@ type Queries struct {
 }
 
 type Commands struct {
-	Vote command.VoteCommand
+	Vote       command.VoteCommand
+	RemoveVote command.RemoveVoteCommand
 }

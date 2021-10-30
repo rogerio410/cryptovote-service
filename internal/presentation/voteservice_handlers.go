@@ -19,9 +19,14 @@ func (vs VoteService) Vote(ctx context.Context, req *pb.VoteRequest) (*pb.VoteRe
 		return nil, err
 	}
 
+	if req.Username == "" {
+		err := status.New(codes.InvalidArgument, "Username cannot be empty").Err()
+		return nil, err
+	}
+
 	value := req.Value.String()
 
-	if err := vs.Application.Commands.Vote.Execute(ctx, req.Symbol, value); err != nil {
+	if err := vs.Application.Commands.Vote.Execute(ctx, req.Symbol, value, req.Username); err != nil {
 		result_err := status.New(codes.InvalidArgument, err.Error()).Err()
 		return nil, result_err
 	}
@@ -37,7 +42,17 @@ func (vs VoteService) RemoveVote(ctx context.Context, req *pb.RemoveVoteRequest)
 		return nil, err
 	}
 
-	response := &pb.RemoveVoteResponse{Response: false}
+	if req.Username == "" {
+		err := status.New(codes.InvalidArgument, "Username cannot be empty").Err()
+		return nil, err
+	}
+
+	if err := vs.Application.Commands.RemoveVote.Execute(ctx, req.Symbol, req.Username); err != nil {
+		result_err := status.New(codes.InvalidArgument, err.Error()).Err()
+		return nil, result_err
+	}
+
+	response := &pb.RemoveVoteResponse{Response: true}
 
 	return response, nil
 }

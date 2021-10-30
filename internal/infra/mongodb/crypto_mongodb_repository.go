@@ -34,7 +34,7 @@ func (m MongoDBCryptoRepository) GetAll(ctx context.Context) ([]domain.Cryptocur
 	return cryptos, nil
 }
 
-func (m MongoDBCryptoRepository) GetCurrencyBySymbol(ctx context.Context, symbol string) (domain.Cryptocurrency, error) {
+func (m MongoDBCryptoRepository) GetBySymbol(ctx context.Context, symbol string) (domain.Cryptocurrency, error) {
 
 	cryptoCollection := m.mongoClient.Database("cryptovote").Collection("cryptos")
 
@@ -47,20 +47,38 @@ func (m MongoDBCryptoRepository) GetCurrencyBySymbol(ctx context.Context, symbol
 	return crypto, err
 }
 
-func (m MongoDBCryptoRepository) SaveVote(ctx context.Context) ([]domain.Cryptocurrency, error) {
-
+func (m MongoDBCryptoRepository) AddVote(ctx context.Context, symbol string, vote domain.Vote) error {
 	cryptoCollection := m.mongoClient.Database("cryptovote").Collection("cryptos")
 
-	cursor, err := cryptoCollection.Find(ctx, bson.D{})
+	filter := bson.M{"symbol": symbol}
+	update := bson.M{"$push": bson.M{"votes": vote}}
+	_, err := cryptoCollection.UpdateOne(
+		ctx,
+		filter,
+		update,
+	)
 
 	if err != nil {
-		panic(err)
-	}
-	var cryptos []domain.Cryptocurrency
-
-	if err = cursor.All(ctx, &cryptos); err != nil {
-		panic(err)
+		return err
 	}
 
-	return cryptos, nil
+	return nil
+}
+
+func (m MongoDBCryptoRepository) RemoveVote(ctx context.Context, symbol string, user domain.User) error {
+	cryptoCollection := m.mongoClient.Database("cryptovote").Collection("cryptos")
+
+	filter := bson.M{"symbol": symbol}
+	update := bson.M{"$pull": bson.M{"votes": bson.M{"user": user.ID}}}
+	_, err := cryptoCollection.UpdateOne(
+		ctx,
+		filter,
+		update,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -24,6 +24,7 @@ message VoteRequest{
 
     string symbol = 1;
     Value value = 2;
+    string username = 3;
 }
 
 message VoteResponse{
@@ -32,6 +33,7 @@ message VoteResponse{
 
 message RemoveVoteRequest{
     string symbol = 1;
+    string username = 2;
 }
 
 message RemoveVoteResponse{

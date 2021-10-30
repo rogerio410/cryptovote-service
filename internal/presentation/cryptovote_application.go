@@ -19,6 +19,7 @@ func NewCryptoApplication(ctx context.Context) app.Application {
 
 	mongoClient := newMongoDBClient(ctx)
 	cryptoRepo := mongodb.NewMongoDBCryptoRepository(mongoClient)
+	userRepo := mongodb.NewMongoDBUserRepository(mongoClient)
 
 	// Concrete App
 	application := app.Application{
@@ -26,7 +27,8 @@ func NewCryptoApplication(ctx context.Context) app.Application {
 			AllCrypto: query.NewGetAllCriptoQuery(cryptoRepo),
 		},
 		Commands: app.Commands{
-			Vote: command.NewVoteCommand(cryptoRepo),
+			Vote:       command.NewVoteCommand(cryptoRepo, userRepo),
+			RemoveVote: command.NewRemoveVoteCommand(cryptoRepo, userRepo),
 		},
 	}
 
