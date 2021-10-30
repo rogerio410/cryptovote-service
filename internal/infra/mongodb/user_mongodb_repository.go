@@ -22,7 +22,7 @@ func (m MongoDBCryptoRepository) GetByName(ctx context.Context, name string) (do
 
 	var user domain.User
 
-	result := usersCollection.FindOne(ctx, bson.M{"name": name})
+	result := usersCollection.FindOne(ctx, bson.M{"username": name})
 
 	err := result.Decode(&user)
 

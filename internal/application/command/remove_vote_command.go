@@ -22,7 +22,7 @@ func NewRemoveVoteCommand(cryptoRepository repository.CryptoRepository, userRepo
 
 func (u RemoveVoteCommand) Execute(ctx context.Context, symbol string, username string) error {
 	// TODO: see business logic
-	_, err := u.cryptoRepository.GetBySymbol(ctx, symbol)
+	crypto, err := u.cryptoRepository.GetBySymbol(ctx, symbol)
 
 	if err != nil {
 		return errors.New("Invalid Cryptocurrency symbol!")
@@ -34,7 +34,13 @@ func (u RemoveVoteCommand) Execute(ctx context.Context, symbol string, username 
 		return errors.New("Invalid username!")
 	}
 
-	add_err := u.cryptoRepository.RemoveVote(ctx, symbol, user)
+	vote, err := u.cryptoRepository.GetVoteByCryptoAndUser(ctx, crypto, user)
+
+	if err != nil {
+		return errors.New("Vote not found!")
+	}
+
+	add_err := u.cryptoRepository.RemoveVote(ctx, vote)
 
 	if add_err != nil {
 		return errors.New("Error on remove vote!")

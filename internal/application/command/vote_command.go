@@ -22,7 +22,7 @@ func NewVoteCommand(cryptoRepository repository.CryptoRepository, userRepository
 }
 
 func (u VoteCommand) Execute(ctx context.Context, symbol string, value string, username string) error {
-	_, err := u.cryptoRepository.GetBySymbol(ctx, symbol)
+	crypto, err := u.cryptoRepository.GetBySymbol(ctx, symbol)
 	if err != nil {
 		return errors.New("Invalid Cryptocurrency symbol!")
 	}
@@ -32,16 +32,10 @@ func (u VoteCommand) Execute(ctx context.Context, symbol string, value string, u
 		return errors.New("Invalid username!")
 	}
 
-	vote := domain.Vote{Vote: value, User: user.ID}
-
-	// remove an Vote for that symbol, if it exists
-	remove_err := u.cryptoRepository.RemoveVote(ctx, symbol, user)
-	if remove_err != nil {
-		return errors.New("Error on add new vote!")
-	}
+	vote := domain.Vote{Vote: value, UserID: user.ID, CryptoID: crypto.ID}
 
 	// add new one
-	add_err := u.cryptoRepository.AddVote(ctx, symbol, vote)
+	add_err := u.cryptoRepository.AddVote(ctx, vote)
 	if add_err != nil {
 		return errors.New("Error on add new vote!")
 	}
