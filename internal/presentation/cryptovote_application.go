@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/joho/godotenv"
 	app "github.com/rogerio410/cryptovote-service/internal/application"
 	"github.com/rogerio410/cryptovote-service/internal/application/command"
 	"github.com/rogerio410/cryptovote-service/internal/application/query"
@@ -37,8 +38,24 @@ func NewCryptoApplication(ctx context.Context) app.Application {
 }
 
 func newMongoDBClient(ctx context.Context) *mongo.Client {
+	envs, err := godotenv.Read(".env")
 
-	mongodbUri := fmt.Sprintf("mongodb://localhost:27017/?readPreference=primary&directConnection=true&ssl=false")
+	if err != nil {
+		fmt.Println("Error loading .env file")
+	}
+
+	host := envs["MONGO_HOST"]
+	port := envs["MONGO_PORT"]
+	user := envs["MONGO_USER"]
+	password := envs["MONGO_PASSWORD"]
+
+	mongodbUri := ""
+	if user != "" {
+		mongodbUri = fmt.Sprintf("mongodb://%v:%v@%v:%v", user, password, host, port)
+	} else {
+		mongodbUri = fmt.Sprintf("mongodb://%v:%v", host, port)
+	}
+
 	mongoClient, err := mongo.NewClient(options.Client().ApplyURI(mongodbUri))
 	if err != nil {
 		log.Fatal(err)

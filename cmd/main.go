@@ -8,6 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/joho/godotenv"
 	"github.com/rogerio410/cryptovote-service/internal/presentation"
 	"github.com/rogerio410/cryptovote-service/pkg/pb/voteservice"
 	"google.golang.org/grpc"
@@ -21,6 +22,7 @@ var (
 )
 
 func main() {
+	godotenv.Load()
 	fmt.Println("Hello Go")
 	server = grpc.NewServer()
 
@@ -48,12 +50,21 @@ func main() {
 }
 
 func initializeListener() {
-	var err error
-	port := os.Getenv("PORT")
+	envs, err := godotenv.Read(".env")
+
+	if err != nil {
+		fmt.Println("Error loading .env file")
+	}
+
+	port := envs["PORT"]
+	server := envs["SERVER"]
 	if port == "" {
 		port = "3007"
 	}
-	address := fmt.Sprintf("localhost:%v", port)
+	if server == "" {
+		port = "localhost"
+	}
+	address := fmt.Sprintf("%v:%v", server, port)
 	listener, err = net.Listen("tcp", address)
 
 	if err != nil {
