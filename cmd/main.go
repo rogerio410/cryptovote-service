@@ -50,6 +50,7 @@ func main() {
 
 func initializeListener() {
 	viper.AddConfigPath(".")
+	viper.AddConfigPath("/home/deploy/go/src/cryptovote-service")
 	viper.SetConfigFile(".env")
 	err := viper.ReadInConfig()
 
