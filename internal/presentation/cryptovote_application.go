@@ -45,7 +45,7 @@ func newMongoDBClient(ctx context.Context) *mongo.Client {
 
 	mongodbUri := ""
 	if user != "" {
-		mongodbUri = fmt.Sprintf("mongodb://%v:%v@%v:%v", user, password, host, port)
+		mongodbUri = fmt.Sprintf("mongodb+srv://%v:%v@%v/cryptovotes?retryWrites=true&w=majority", user, password, host)
 	} else {
 		mongodbUri = fmt.Sprintf("mongodb://%v:%v", host, port)
 	}
