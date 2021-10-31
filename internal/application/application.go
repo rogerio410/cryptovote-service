@@ -11,7 +11,8 @@ type Application struct {
 }
 
 type Queries struct {
-	AllCrypto query.GetAllCriptoQuery
+	GetAllCrypto      query.GetAllCriptoQuery
+	GetCryptoBySymbol query.GetCriptoBySymbolQuery
 }
 
 type Commands struct {

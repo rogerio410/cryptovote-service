@@ -10,14 +10,13 @@ message Cryptocurrency{
     int32 votes = 3;
 }
 
-message GetAllCryptoRequest{
-}
-
 message GetAllCryptoResponse{
     repeated Cryptocurrency cryptocurrencies = 1;
 }
 
-message CryptoVotesRequest{}
+message GetCryptoBySymbolStreamRequest{
+    string symbol = 1;
+}
 
 message CryptoVotesResponse{
     repeated Cryptocurrency cryptocurrencies = 1; 

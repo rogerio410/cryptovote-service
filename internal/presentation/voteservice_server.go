@@ -2,6 +2,7 @@ package presentation
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -9,6 +10,7 @@ import (
 	pb "github.com/rogerio410/cryptovote-service/pkg/pb/voteservice"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type VoteServiceServer struct {
@@ -60,9 +62,9 @@ func (vs VoteServiceServer) RemoveVote(ctx context.Context, req *pb.RemoveVoteRe
 	return response, nil
 }
 
-func (vs VoteServiceServer) GetCryptoVotes(ctx context.Context, req *pb.GetAllCryptoRequest) (*pb.GetAllCryptoResponse, error) {
+func (vs VoteServiceServer) GetAllCrypto(ctx context.Context, req *emptypb.Empty) (*pb.GetAllCryptoResponse, error) {
 
-	cryptos, err := vs.Application.Queries.AllCrypto.Execute(ctx)
+	cryptos, err := vs.Application.Queries.GetAllCrypto.Execute(ctx)
 
 	if err != nil {
 		err_status := status.New(codes.Internal, "Something went wrong!").Err()
@@ -80,15 +82,19 @@ func (vs VoteServiceServer) GetCryptoVotes(ctx context.Context, req *pb.GetAllCr
 	return response, nil
 }
 
-func (vs VoteServiceServer) GetCryptoVotesStream(req *pb.CryptoVotesRequest, stream pb.VoteService_GetCryptoVotesStreamServer) error {
+func (vs VoteServiceServer) GetAllCryptoStream(req *emptypb.Empty, stream pb.VoteService_GetAllCryptoStreamServer) error {
+
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("Stream ended! Error:\n", err)
+		}
+	}()
 
 	for {
-		cryptos, err := vs.Application.Queries.AllCrypto.Execute(vs.Ctx)
+		cryptos, err := vs.Application.Queries.GetAllCrypto.Execute(stream.Context())
 
 		if err != nil {
-			log.Fatalln(err)
-			break
-			// return err
+			return status.New(codes.NotFound, "It's was not possivel return all cryptos!").Err()
 		}
 
 		// Manual converting from model.CryptoCurrency to pb.CryptoCurrency
@@ -100,9 +106,30 @@ func (vs VoteServiceServer) GetCryptoVotesStream(req *pb.CryptoVotesRequest, str
 		response := &pb.CryptoVotesResponse{Cryptocurrencies: pb_cryptos}
 		stream.Send(response)
 
-		time.Sleep(time.Second * 5)
+		time.Sleep(time.Second * 3)
 		log.Println("Sending data")
 	}
+}
 
-	return nil
+func (vs VoteServiceServer) GetCryptoBySymbolStream(req *pb.GetCryptoBySymbolStreamRequest, stream pb.VoteService_GetCryptoBySymbolStreamServer) error {
+
+	for {
+		crypto, err := vs.Application.Queries.GetCryptoBySymbol.Execute(stream.Context(), req.Symbol)
+
+		if err != nil {
+			return status.New(codes.NotFound, "Crypto not found with given code!").Err()
+		}
+
+		// Manual converting from model.CryptoCurrency to pb.CryptoCurrency
+		pb_crypto := &pb.Cryptocurrency{
+			Symbol: crypto.Symbol,
+			Name:   crypto.Name,
+			Votes:  crypto.Votes,
+		}
+
+		stream.Send(pb_crypto)
+
+		time.Sleep(time.Second * 3)
+		log.Println("Sending data")
+	}
 }

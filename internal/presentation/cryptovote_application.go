@@ -24,7 +24,8 @@ func NewCryptoApplication(ctx context.Context) app.Application {
 	// Concrete App
 	application := app.Application{
 		Queries: app.Queries{
-			AllCrypto: query.NewGetAllCriptoQuery(cryptoRepo),
+			GetAllCrypto:      query.NewGetAllCriptoQuery(cryptoRepo),
+			GetCryptoBySymbol: query.NewGetCriptoBySymbolQuery(cryptoRepo),
 		},
 		Commands: app.Commands{
 			Vote:       command.NewVoteCommand(cryptoRepo, userRepo),

@@ -13,6 +13,7 @@ import (
 	status "google.golang.org/grpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	reflect "reflect"
 )
 
@@ -30,56 +31,66 @@ var file_voteservice_service_proto_rawDesc = []byte{
 	0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0b, 0x76, 0x6f, 0x74,
 	0x65, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x1a, 0x1a, 0x76, 0x6f, 0x74, 0x65, 0x73, 0x65,
 	0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x2e, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x32, 0xd5, 0x02, 0x0a, 0x0b, 0x56, 0x6f, 0x74, 0x65, 0x53, 0x65, 0x72,
-	0x76, 0x69, 0x63, 0x65, 0x12, 0x57, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x43, 0x72, 0x79, 0x70, 0x74,
-	0x6f, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x12, 0x20, 0x2e, 0x76, 0x6f, 0x74, 0x65, 0x73, 0x65, 0x72,
-	0x76, 0x69, 0x63, 0x65, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x43, 0x72, 0x79, 0x70, 0x74,
-	0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x21, 0x2e, 0x76, 0x6f, 0x74, 0x65, 0x73,
-	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x43, 0x72, 0x79,
-	0x70, 0x74, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x3d, 0x0a,
-	0x04, 0x56, 0x6f, 0x74, 0x65, 0x12, 0x18, 0x2e, 0x76, 0x6f, 0x74, 0x65, 0x73, 0x65, 0x72, 0x76,
-	0x69, 0x63, 0x65, 0x2e, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
-	0x19, 0x2e, 0x76, 0x6f, 0x74, 0x65, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x56, 0x6f,
-	0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x4f, 0x0a, 0x0a,
-	0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x12, 0x1e, 0x2e, 0x76, 0x6f, 0x74,
-	0x65, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x56,
-	0x6f, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1f, 0x2e, 0x76, 0x6f, 0x74,
-	0x65, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x56,
-	0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x5d, 0x0a,
-	0x14, 0x47, 0x65, 0x74, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x53,
-	0x74, 0x72, 0x65, 0x61, 0x6d, 0x12, 0x1f, 0x2e, 0x76, 0x6f, 0x74, 0x65, 0x73, 0x65, 0x72, 0x76,
-	0x69, 0x63, 0x65, 0x2e, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x20, 0x2e, 0x76, 0x6f, 0x74, 0x65, 0x73, 0x65, 0x72,
-	0x76, 0x69, 0x63, 0x65, 0x2e, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x56, 0x6f, 0x74, 0x65, 0x73,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x30, 0x01, 0x42, 0x49, 0x5a, 0x47,
-	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x72, 0x6f, 0x67, 0x65, 0x72,
-	0x69, 0x6f, 0x34, 0x31, 0x30, 0x2f, 0x63, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x76, 0x6f, 0x74, 0x65,
-	0x2d, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x70, 0x62, 0x2f,
-	0x76, 0x6f, 0x74, 0x65, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x3b, 0x76, 0x6f, 0x74, 0x65,
-	0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1b, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x65, 0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x32, 0xa7, 0x03, 0x0a, 0x0b, 0x56, 0x6f, 0x74, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x12, 0x4b, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x43, 0x72, 0x79, 0x70, 0x74,
+	0x6f, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x21, 0x2e, 0x76, 0x6f, 0x74, 0x65,
+	0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x43, 0x72,
+	0x79, 0x70, 0x74, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x52,
+	0x0a, 0x12, 0x47, 0x65, 0x74, 0x41, 0x6c, 0x6c, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x53, 0x74,
+	0x72, 0x65, 0x61, 0x6d, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x20, 0x2e, 0x76,
+	0x6f, 0x74, 0x65, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x43, 0x72, 0x79, 0x70, 0x74,
+	0x6f, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
+	0x30, 0x01, 0x12, 0x67, 0x0a, 0x17, 0x47, 0x65, 0x74, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x42,
+	0x79, 0x53, 0x79, 0x6d, 0x62, 0x6f, 0x6c, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x12, 0x2b, 0x2e,
+	0x76, 0x6f, 0x74, 0x65, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x47, 0x65, 0x74, 0x43,
+	0x72, 0x79, 0x70, 0x74, 0x6f, 0x42, 0x79, 0x53, 0x79, 0x6d, 0x62, 0x6f, 0x6c, 0x53, 0x74, 0x72,
+	0x65, 0x61, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x76, 0x6f, 0x74,
+	0x65, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x63,
+	0x75, 0x72, 0x72, 0x65, 0x6e, 0x63, 0x79, 0x22, 0x00, 0x30, 0x01, 0x12, 0x3d, 0x0a, 0x04, 0x56,
+	0x6f, 0x74, 0x65, 0x12, 0x18, 0x2e, 0x76, 0x6f, 0x74, 0x65, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x2e, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x19, 0x2e,
+	0x76, 0x6f, 0x74, 0x65, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x56, 0x6f, 0x74, 0x65,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x4f, 0x0a, 0x0a, 0x52, 0x65,
+	0x6d, 0x6f, 0x76, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x12, 0x1e, 0x2e, 0x76, 0x6f, 0x74, 0x65, 0x73,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x56, 0x6f, 0x74,
+	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1f, 0x2e, 0x76, 0x6f, 0x74, 0x65, 0x73,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x56, 0x6f, 0x74,
+	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x49, 0x5a, 0x47, 0x67,
+	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x72, 0x6f, 0x67, 0x65, 0x72, 0x69,
+	0x6f, 0x34, 0x31, 0x30, 0x2f, 0x63, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x76, 0x6f, 0x74, 0x65, 0x2d,
+	0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x70, 0x62, 0x2f, 0x76,
+	0x6f, 0x74, 0x65, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x3b, 0x76, 0x6f, 0x74, 0x65, 0x73,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var file_voteservice_service_proto_goTypes = []interface{}{
-	(*GetAllCryptoRequest)(nil),  // 0: voteservice.GetAllCryptoRequest
-	(*VoteRequest)(nil),          // 1: voteservice.VoteRequest
-	(*RemoveVoteRequest)(nil),    // 2: voteservice.RemoveVoteRequest
-	(*CryptoVotesRequest)(nil),   // 3: voteservice.CryptoVotesRequest
-	(*GetAllCryptoResponse)(nil), // 4: voteservice.GetAllCryptoResponse
-	(*VoteResponse)(nil),         // 5: voteservice.VoteResponse
-	(*RemoveVoteResponse)(nil),   // 6: voteservice.RemoveVoteResponse
-	(*CryptoVotesResponse)(nil),  // 7: voteservice.CryptoVotesResponse
+	(*emptypb.Empty)(nil),                  // 0: google.protobuf.Empty
+	(*GetCryptoBySymbolStreamRequest)(nil), // 1: voteservice.GetCryptoBySymbolStreamRequest
+	(*VoteRequest)(nil),                    // 2: voteservice.VoteRequest
+	(*RemoveVoteRequest)(nil),              // 3: voteservice.RemoveVoteRequest
+	(*GetAllCryptoResponse)(nil),           // 4: voteservice.GetAllCryptoResponse
+	(*CryptoVotesResponse)(nil),            // 5: voteservice.CryptoVotesResponse
+	(*Cryptocurrency)(nil),                 // 6: voteservice.Cryptocurrency
+	(*VoteResponse)(nil),                   // 7: voteservice.VoteResponse
+	(*RemoveVoteResponse)(nil),             // 8: voteservice.RemoveVoteResponse
 }
 var file_voteservice_service_proto_depIdxs = []int32{
-	0, // 0: voteservice.VoteService.GetCryptoVotes:input_type -> voteservice.GetAllCryptoRequest
-	1, // 1: voteservice.VoteService.Vote:input_type -> voteservice.VoteRequest
-	2, // 2: voteservice.VoteService.RemoveVote:input_type -> voteservice.RemoveVoteRequest
-	3, // 3: voteservice.VoteService.GetCryptoVotesStream:input_type -> voteservice.CryptoVotesRequest
-	4, // 4: voteservice.VoteService.GetCryptoVotes:output_type -> voteservice.GetAllCryptoResponse
-	5, // 5: voteservice.VoteService.Vote:output_type -> voteservice.VoteResponse
-	6, // 6: voteservice.VoteService.RemoveVote:output_type -> voteservice.RemoveVoteResponse
-	7, // 7: voteservice.VoteService.GetCryptoVotesStream:output_type -> voteservice.CryptoVotesResponse
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
+	0, // 0: voteservice.VoteService.GetAllCrypto:input_type -> google.protobuf.Empty
+	0, // 1: voteservice.VoteService.GetAllCryptoStream:input_type -> google.protobuf.Empty
+	1, // 2: voteservice.VoteService.GetCryptoBySymbolStream:input_type -> voteservice.GetCryptoBySymbolStreamRequest
+	2, // 3: voteservice.VoteService.Vote:input_type -> voteservice.VoteRequest
+	3, // 4: voteservice.VoteService.RemoveVote:input_type -> voteservice.RemoveVoteRequest
+	4, // 5: voteservice.VoteService.GetAllCrypto:output_type -> voteservice.GetAllCryptoResponse
+	5, // 6: voteservice.VoteService.GetAllCryptoStream:output_type -> voteservice.CryptoVotesResponse
+	6, // 7: voteservice.VoteService.GetCryptoBySymbolStream:output_type -> voteservice.Cryptocurrency
+	7, // 8: voteservice.VoteService.Vote:output_type -> voteservice.VoteResponse
+	8, // 9: voteservice.VoteService.RemoveVote:output_type -> voteservice.RemoveVoteResponse
+	5, // [5:10] is the sub-list for method output_type
+	0, // [0:5] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -122,10 +133,11 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type VoteServiceClient interface {
-	GetCryptoVotes(ctx context.Context, in *GetAllCryptoRequest, opts ...grpc.CallOption) (*GetAllCryptoResponse, error)
+	GetAllCrypto(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllCryptoResponse, error)
+	GetAllCryptoStream(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (VoteService_GetAllCryptoStreamClient, error)
+	GetCryptoBySymbolStream(ctx context.Context, in *GetCryptoBySymbolStreamRequest, opts ...grpc.CallOption) (VoteService_GetCryptoBySymbolStreamClient, error)
 	Vote(ctx context.Context, in *VoteRequest, opts ...grpc.CallOption) (*VoteResponse, error)
 	RemoveVote(ctx context.Context, in *RemoveVoteRequest, opts ...grpc.CallOption) (*RemoveVoteResponse, error)
-	GetCryptoVotesStream(ctx context.Context, in *CryptoVotesRequest, opts ...grpc.CallOption) (VoteService_GetCryptoVotesStreamClient, error)
 }
 
 type voteServiceClient struct {
@@ -136,13 +148,77 @@ func NewVoteServiceClient(cc grpc.ClientConnInterface) VoteServiceClient {
 	return &voteServiceClient{cc}
 }
 
-func (c *voteServiceClient) GetCryptoVotes(ctx context.Context, in *GetAllCryptoRequest, opts ...grpc.CallOption) (*GetAllCryptoResponse, error) {
+func (c *voteServiceClient) GetAllCrypto(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllCryptoResponse, error) {
 	out := new(GetAllCryptoResponse)
-	err := c.cc.Invoke(ctx, "/voteservice.VoteService/GetCryptoVotes", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/voteservice.VoteService/GetAllCrypto", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
+}
+
+func (c *voteServiceClient) GetAllCryptoStream(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (VoteService_GetAllCryptoStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_VoteService_serviceDesc.Streams[0], "/voteservice.VoteService/GetAllCryptoStream", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &voteServiceGetAllCryptoStreamClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type VoteService_GetAllCryptoStreamClient interface {
+	Recv() (*CryptoVotesResponse, error)
+	grpc.ClientStream
+}
+
+type voteServiceGetAllCryptoStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *voteServiceGetAllCryptoStreamClient) Recv() (*CryptoVotesResponse, error) {
+	m := new(CryptoVotesResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *voteServiceClient) GetCryptoBySymbolStream(ctx context.Context, in *GetCryptoBySymbolStreamRequest, opts ...grpc.CallOption) (VoteService_GetCryptoBySymbolStreamClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_VoteService_serviceDesc.Streams[1], "/voteservice.VoteService/GetCryptoBySymbolStream", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &voteServiceGetCryptoBySymbolStreamClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type VoteService_GetCryptoBySymbolStreamClient interface {
+	Recv() (*Cryptocurrency, error)
+	grpc.ClientStream
+}
+
+type voteServiceGetCryptoBySymbolStreamClient struct {
+	grpc.ClientStream
+}
+
+func (x *voteServiceGetCryptoBySymbolStreamClient) Recv() (*Cryptocurrency, error) {
+	m := new(Cryptocurrency)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
 }
 
 func (c *voteServiceClient) Vote(ctx context.Context, in *VoteRequest, opts ...grpc.CallOption) (*VoteResponse, error) {
@@ -163,52 +239,27 @@ func (c *voteServiceClient) RemoveVote(ctx context.Context, in *RemoveVoteReques
 	return out, nil
 }
 
-func (c *voteServiceClient) GetCryptoVotesStream(ctx context.Context, in *CryptoVotesRequest, opts ...grpc.CallOption) (VoteService_GetCryptoVotesStreamClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_VoteService_serviceDesc.Streams[0], "/voteservice.VoteService/GetCryptoVotesStream", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &voteServiceGetCryptoVotesStreamClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type VoteService_GetCryptoVotesStreamClient interface {
-	Recv() (*CryptoVotesResponse, error)
-	grpc.ClientStream
-}
-
-type voteServiceGetCryptoVotesStreamClient struct {
-	grpc.ClientStream
-}
-
-func (x *voteServiceGetCryptoVotesStreamClient) Recv() (*CryptoVotesResponse, error) {
-	m := new(CryptoVotesResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 // VoteServiceServer is the server API for VoteService service.
 type VoteServiceServer interface {
-	GetCryptoVotes(context.Context, *GetAllCryptoRequest) (*GetAllCryptoResponse, error)
+	GetAllCrypto(context.Context, *emptypb.Empty) (*GetAllCryptoResponse, error)
+	GetAllCryptoStream(*emptypb.Empty, VoteService_GetAllCryptoStreamServer) error
+	GetCryptoBySymbolStream(*GetCryptoBySymbolStreamRequest, VoteService_GetCryptoBySymbolStreamServer) error
 	Vote(context.Context, *VoteRequest) (*VoteResponse, error)
 	RemoveVote(context.Context, *RemoveVoteRequest) (*RemoveVoteResponse, error)
-	GetCryptoVotesStream(*CryptoVotesRequest, VoteService_GetCryptoVotesStreamServer) error
 }
 
 // UnimplementedVoteServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedVoteServiceServer struct {
 }
 
-func (*UnimplementedVoteServiceServer) GetCryptoVotes(context.Context, *GetAllCryptoRequest) (*GetAllCryptoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCryptoVotes not implemented")
+func (*UnimplementedVoteServiceServer) GetAllCrypto(context.Context, *emptypb.Empty) (*GetAllCryptoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllCrypto not implemented")
+}
+func (*UnimplementedVoteServiceServer) GetAllCryptoStream(*emptypb.Empty, VoteService_GetAllCryptoStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method GetAllCryptoStream not implemented")
+}
+func (*UnimplementedVoteServiceServer) GetCryptoBySymbolStream(*GetCryptoBySymbolStreamRequest, VoteService_GetCryptoBySymbolStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method GetCryptoBySymbolStream not implemented")
 }
 func (*UnimplementedVoteServiceServer) Vote(context.Context, *VoteRequest) (*VoteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Vote not implemented")
@@ -216,30 +267,69 @@ func (*UnimplementedVoteServiceServer) Vote(context.Context, *VoteRequest) (*Vot
 func (*UnimplementedVoteServiceServer) RemoveVote(context.Context, *RemoveVoteRequest) (*RemoveVoteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveVote not implemented")
 }
-func (*UnimplementedVoteServiceServer) GetCryptoVotesStream(*CryptoVotesRequest, VoteService_GetCryptoVotesStreamServer) error {
-	return status.Errorf(codes.Unimplemented, "method GetCryptoVotesStream not implemented")
-}
 
 func RegisterVoteServiceServer(s *grpc.Server, srv VoteServiceServer) {
 	s.RegisterService(&_VoteService_serviceDesc, srv)
 }
 
-func _VoteService_GetCryptoVotes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAllCryptoRequest)
+func _VoteService_GetAllCrypto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VoteServiceServer).GetCryptoVotes(ctx, in)
+		return srv.(VoteServiceServer).GetAllCrypto(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/voteservice.VoteService/GetCryptoVotes",
+		FullMethod: "/voteservice.VoteService/GetAllCrypto",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VoteServiceServer).GetCryptoVotes(ctx, req.(*GetAllCryptoRequest))
+		return srv.(VoteServiceServer).GetAllCrypto(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
+}
+
+func _VoteService_GetAllCryptoStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(emptypb.Empty)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(VoteServiceServer).GetAllCryptoStream(m, &voteServiceGetAllCryptoStreamServer{stream})
+}
+
+type VoteService_GetAllCryptoStreamServer interface {
+	Send(*CryptoVotesResponse) error
+	grpc.ServerStream
+}
+
+type voteServiceGetAllCryptoStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *voteServiceGetAllCryptoStreamServer) Send(m *CryptoVotesResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _VoteService_GetCryptoBySymbolStream_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(GetCryptoBySymbolStreamRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(VoteServiceServer).GetCryptoBySymbolStream(m, &voteServiceGetCryptoBySymbolStreamServer{stream})
+}
+
+type VoteService_GetCryptoBySymbolStreamServer interface {
+	Send(*Cryptocurrency) error
+	grpc.ServerStream
+}
+
+type voteServiceGetCryptoBySymbolStreamServer struct {
+	grpc.ServerStream
+}
+
+func (x *voteServiceGetCryptoBySymbolStreamServer) Send(m *Cryptocurrency) error {
+	return x.ServerStream.SendMsg(m)
 }
 
 func _VoteService_Vote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -278,34 +368,13 @@ func _VoteService_RemoveVote_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _VoteService_GetCryptoVotesStream_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(CryptoVotesRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(VoteServiceServer).GetCryptoVotesStream(m, &voteServiceGetCryptoVotesStreamServer{stream})
-}
-
-type VoteService_GetCryptoVotesStreamServer interface {
-	Send(*CryptoVotesResponse) error
-	grpc.ServerStream
-}
-
-type voteServiceGetCryptoVotesStreamServer struct {
-	grpc.ServerStream
-}
-
-func (x *voteServiceGetCryptoVotesStreamServer) Send(m *CryptoVotesResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
 var _VoteService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "voteservice.VoteService",
 	HandlerType: (*VoteServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetCryptoVotes",
-			Handler:    _VoteService_GetCryptoVotes_Handler,
+			MethodName: "GetAllCrypto",
+			Handler:    _VoteService_GetAllCrypto_Handler,
 		},
 		{
 			MethodName: "Vote",
@@ -318,8 +387,13 @@ var _VoteService_serviceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "GetCryptoVotesStream",
-			Handler:       _VoteService_GetCryptoVotesStream_Handler,
+			StreamName:    "GetAllCryptoStream",
+			Handler:       _VoteService_GetAllCryptoStream_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "GetCryptoBySymbolStream",
+			Handler:       _VoteService_GetCryptoBySymbolStream_Handler,
 			ServerStreams: true,
 		},
 	},

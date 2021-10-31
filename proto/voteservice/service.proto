@@ -6,12 +6,15 @@ package voteservice;
 option go_package = "github.com/rogerio410/cryptovote-service/pkg/pb/voteservice;voteservice";
 
 import "voteservice/messages.proto";
+import "google/protobuf/empty.proto";
 
 service VoteService{
-    rpc GetCryptoVotes(GetAllCryptoRequest) returns (GetAllCryptoResponse) {}
+    rpc GetAllCrypto(google.protobuf.Empty) returns (GetAllCryptoResponse) {}
+    rpc GetAllCryptoStream(google.protobuf.Empty) returns (stream CryptoVotesResponse) {}
+    rpc GetCryptoBySymbolStream(GetCryptoBySymbolStreamRequest) returns (stream Cryptocurrency) {}
     rpc Vote(VoteRequest) returns (VoteResponse) {}
     rpc RemoveVote(RemoveVoteRequest) returns (RemoveVoteResponse) {}
-    rpc GetCryptoVotesStream(CryptoVotesRequest) returns (stream CryptoVotesResponse) {}
+    
 }
 
 
