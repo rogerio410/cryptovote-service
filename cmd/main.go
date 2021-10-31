@@ -27,7 +27,7 @@ func main() {
 
 	initializeListener()
 
-	// Create new CryptAppp with all Dependencies
+	// Create new CryptoApp with all Dependencies
 	ctx := context.Background()
 	gctx, globalCancel = context.WithCancel(ctx)
 	application := presentation.NewCryptoApplication(ctx)
@@ -50,7 +50,8 @@ func main() {
 
 func initializeListener() {
 	viper.AddConfigPath(".")
-	viper.AddConfigPath("/home/deploy/go/src/cryptovote-service")
+	// TODO: remove
+	viper.AddConfigPath("/home/deploy/app/cryptovote-service")
 	viper.SetConfigFile(".env")
 	err := viper.ReadInConfig()
 
@@ -69,7 +70,7 @@ func initializeListener() {
 		panic(msg)
 	}
 
-	fmt.Println("Listener OK.")
+	fmt.Printf("Server Listening on %v:%v", server, port)
 
 }
 
