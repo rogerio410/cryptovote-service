@@ -55,6 +55,7 @@ func initializeListener() {
 
 	if err != nil {
 		fmt.Println("Error loading .env file")
+		panic(err)
 	}
 	port, _ := viper.Get("PORT").(string)
 	server, _ := viper.Get("SERVER").(string)
