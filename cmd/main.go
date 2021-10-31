@@ -49,6 +49,7 @@ func main() {
 }
 
 func initializeListener() {
+	viper.AddConfigPath(".")
 	viper.SetConfigFile(".env")
 	err := viper.ReadInConfig()
 
@@ -57,12 +58,7 @@ func initializeListener() {
 	}
 	port, _ := viper.Get("PORT").(string)
 	server, _ := viper.Get("SERVER").(string)
-	if port == "" {
-		port = "3007"
-	}
-	if server == "" {
-		port = "localhost"
-	}
+
 	address := fmt.Sprintf("%v:%v", server, port)
 	listener, err = net.Listen("tcp", address)
 
