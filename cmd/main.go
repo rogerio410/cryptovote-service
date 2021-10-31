@@ -51,7 +51,7 @@ func initializeListener() {
 	var err error
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000"
+		port = "3007"
 	}
 	address := fmt.Sprintf("localhost:%v", port)
 	listener, err = net.Listen("tcp", address)
