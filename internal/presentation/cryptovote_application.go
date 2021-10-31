@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/joho/godotenv"
 	app "github.com/rogerio410/cryptovote-service/internal/application"
 	"github.com/rogerio410/cryptovote-service/internal/application/command"
 	"github.com/rogerio410/cryptovote-service/internal/application/query"
 	"github.com/rogerio410/cryptovote-service/internal/infra/mongodb"
+	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -38,16 +38,10 @@ func NewCryptoApplication(ctx context.Context) app.Application {
 }
 
 func newMongoDBClient(ctx context.Context) *mongo.Client {
-	envs, err := godotenv.Read(".env")
-
-	if err != nil {
-		fmt.Println("Error loading .env file")
-	}
-
-	host := envs["MONGO_HOST"]
-	port := envs["MONGO_PORT"]
-	user := envs["MONGO_USER"]
-	password := envs["MONGO_PASSWORD"]
+	host, _ := viper.Get("MONGO_HOST").(string)
+	port, _ := viper.Get("MONGO_PORT").(string)
+	user, _ := viper.Get("MONGO_USER").(string)
+	password, _ := viper.Get("MONGO_PASSWORD").(string)
 
 	mongodbUri := ""
 	if user != "" {

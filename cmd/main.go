@@ -8,9 +8,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/joho/godotenv"
 	"github.com/rogerio410/cryptovote-service/internal/presentation"
 	"github.com/rogerio410/cryptovote-service/pkg/pb/voteservice"
+	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 )
 
@@ -22,7 +22,6 @@ var (
 )
 
 func main() {
-	godotenv.Load()
 	fmt.Println("Hello Go")
 	server = grpc.NewServer()
 
@@ -50,14 +49,14 @@ func main() {
 }
 
 func initializeListener() {
-	envs, err := godotenv.Read(".env")
+	viper.SetConfigFile(".env")
+	err := viper.ReadInConfig()
 
 	if err != nil {
 		fmt.Println("Error loading .env file")
 	}
-
-	port := envs["PORT"]
-	server := envs["SERVER"]
+	port, _ := viper.Get("PORT").(string)
+	server, _ := viper.Get("SERVER").(string)
 	if port == "" {
 		port = "3007"
 	}
