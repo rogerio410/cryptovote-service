@@ -14,7 +14,7 @@ Server: 64.225.61.39:3007
 
 <img src="https://github.com/rogerio410/cryptovote-service/blob/main/docs/vote.png?raw=true"/>
 
-<img src="https://github.com/rogerio410/cryptovote-service/blob/main/docs/remove.png?raw=true"/>
+<img src="https://github.com/rogerio410/cryptovote-service/blob/main/docs/removevote.png?raw=true"/>
 
 ##Golang gRPC API
 
