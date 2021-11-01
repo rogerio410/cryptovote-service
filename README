@@ -8,13 +8,13 @@ Server: 64.225.61.39:3007
 
 ##Calls with BloomRPC
 
-![BloomRPC](https://github.com/rogerio410/cryptovote-service/blob/main/docs/allcrypto.png)
+![BloomRPC](https://github.com/rogerio410/cryptovote-service/blob/main/docs/allcrypto.png?raw=true)
 
-![BloomRPC](https://github.com/rogerio410/cryptovote-service/blob/main/docs/crypto.png)
+![BloomRPC](https://github.com/rogerio410/cryptovote-service/blob/main/docs/crypto.png?raw=true)
 
-![BloomRPC](https://github.com/rogerio410/cryptovote-service/blob/main/docs/vote.png)
+![BloomRPC](https://github.com/rogerio410/cryptovote-service/blob/main/docs/vote.png?raw=true)
 
-![BloomRPC](https://github.com/rogerio410/cryptovote-service/blob/main/docs/removeß.png)
+![BloomRPC](https://github.com/rogerio410/cryptovote-service/blob/main/docs/remove.png?raw=true)
 
 ##Golang gRPC API
 
