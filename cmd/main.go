@@ -49,14 +49,14 @@ func main() {
 }
 
 func initializeListener() {
-	viper.AddConfigPath(".")
-	// TODO: remove
-	viper.AddConfigPath("/home/deploy/app/cryptovote-service")
-	viper.SetConfigFile(".env")
+	viper.SetConfigName("config")
+	viper.AddConfigPath("./")
+	viper.AddConfigPath("$HOME/app/cryptovote-service/")
+	// viper.SetConfigFile(".env")
 	err := viper.ReadInConfig()
 
 	if err != nil {
-		fmt.Println("Error loading .env file")
+		fmt.Println("Error loading config.env file")
 		panic(err)
 	}
 	port, _ := viper.Get("PORT").(string)
