@@ -50,8 +50,8 @@ func main() {
 
 func initializeListener() {
 	viper.SetConfigName("config")
-	viper.AddConfigPath("./")
-	viper.AddConfigPath("$HOME/app/cryptovote-service/")
+	viper.AddConfigPath(".")
+	viper.AddConfigPath("/home/deploy/app/cryptovote-service")
 	// viper.SetConfigFile(".env")
 	err := viper.ReadInConfig()
 
