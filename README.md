@@ -40,3 +40,7 @@ You can choose the database but the structs used with it should support Marshal/
 
 Deliver the whole solution running in some free cloud service
 The API have a method that stream a live update of the current sum of the votes from a given Cryptocurrency
+
+# Compile proto files
+
+make compile
