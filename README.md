@@ -6,7 +6,7 @@ Server: 64.225.61.39:3007
 
 ## Proto Files:
 
-/pkg/pb/voteservice
+/proto/voteservice
 
 ## Calls with BloomRPC
 
