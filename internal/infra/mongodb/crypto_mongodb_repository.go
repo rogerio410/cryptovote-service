@@ -10,18 +10,25 @@ import (
 )
 
 type MongoDBCryptoRepository struct {
-	mongoClient *mongo.Client
+	cryptoCollection *mongo.Collection
+	voteCollection   *mongo.Collection
 }
 
 func NewMongoDBCryptoRepository(mongoClient *mongo.Client) *MongoDBCryptoRepository {
-	return &MongoDBCryptoRepository{mongoClient: mongoClient}
+	database := mongoClient.Database("cryptovote")
+
+	cryptoCollection := database.Collection("cryptos")
+	voteCollection := database.Collection("votes")
+
+	return &MongoDBCryptoRepository{
+		cryptoCollection: cryptoCollection,
+		voteCollection:   voteCollection,
+	}
 }
 
 func (m MongoDBCryptoRepository) GetAll(ctx context.Context) ([]domain.Cryptocurrency, error) {
 
-	cryptoCollection := m.mongoClient.Database("cryptovote").Collection("cryptos")
-
-	cursor, err := cryptoCollection.Find(
+	cursor, err := m.cryptoCollection.Find(
 		ctx, bson.D{},
 	)
 
@@ -39,11 +46,9 @@ func (m MongoDBCryptoRepository) GetAll(ctx context.Context) ([]domain.Cryptocur
 
 func (m MongoDBCryptoRepository) GetBySymbol(ctx context.Context, symbol string) (domain.Cryptocurrency, error) {
 
-	cryptoCollection := m.mongoClient.Database("cryptovote").Collection("cryptos")
-
 	var crypto domain.Cryptocurrency
 
-	result := cryptoCollection.FindOne(ctx, bson.M{"symbol": symbol})
+	result := m.cryptoCollection.FindOne(ctx, bson.M{"symbol": symbol})
 
 	err := result.Decode(&crypto)
 
@@ -51,14 +56,12 @@ func (m MongoDBCryptoRepository) GetBySymbol(ctx context.Context, symbol string)
 }
 
 func (m MongoDBCryptoRepository) GetVoteByCryptoAndUser(ctx context.Context, crypto domain.Cryptocurrency, user domain.User) (domain.Vote, error) {
-	voteCollection := m.mongoClient.Database("cryptovote").Collection("votes")
-
 	filter := bson.M{
 		"crypto_id": bson.M{"$eq": crypto.ID},
 		"user_id":   bson.M{"$eq": user.ID},
 	}
 
-	result := voteCollection.FindOne(ctx, filter)
+	result := m.voteCollection.FindOne(ctx, filter)
 
 	var vote domain.Vote
 
@@ -68,8 +71,6 @@ func (m MongoDBCryptoRepository) GetVoteByCryptoAndUser(ctx context.Context, cry
 }
 
 func (m MongoDBCryptoRepository) AddVote(ctx context.Context, vote domain.Vote) error {
-	voteCollection := m.mongoClient.Database("cryptovote").Collection("votes")
-
 	filter := bson.M{
 		"crypto_id": bson.M{"$eq": vote.CryptoID},
 		"user_id":   bson.M{"$eq": vote.UserID},
@@ -83,7 +84,7 @@ func (m MongoDBCryptoRepository) AddVote(ctx context.Context, vote domain.Vote) 
 	}
 
 	upsert := true
-	result, err := voteCollection.UpdateOne(
+	result, err := m.voteCollection.UpdateOne(
 		ctx,
 		filter,
 		data,
@@ -115,8 +116,6 @@ func (m MongoDBCryptoRepository) AddVote(ctx context.Context, vote domain.Vote) 
 }
 
 func (m MongoDBCryptoRepository) incUpVote(ctx context.Context, vote domain.Vote, value int32) {
-	cryptoCollection := m.mongoClient.Database("cryptovote").Collection("cryptos")
-
 	filter := bson.M{
 		"_id": bson.M{"$eq": vote.CryptoID},
 	}
@@ -126,7 +125,7 @@ func (m MongoDBCryptoRepository) incUpVote(ctx context.Context, vote domain.Vote
 		},
 	}
 
-	cryptoCollection.UpdateOne(
+	m.cryptoCollection.UpdateOne(
 		ctx,
 		filter,
 		data,
@@ -135,11 +134,10 @@ func (m MongoDBCryptoRepository) incUpVote(ctx context.Context, vote domain.Vote
 }
 
 func (m MongoDBCryptoRepository) RemoveVote(ctx context.Context, vote domain.Vote) error {
-	voteCollection := m.mongoClient.Database("cryptovote").Collection("votes")
 	filter := bson.M{
 		"_id": vote.ID,
 	}
-	result, err := voteCollection.DeleteOne(ctx, filter)
+	result, err := m.voteCollection.DeleteOne(ctx, filter)
 
 	if err != nil {
 		return err

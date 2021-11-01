@@ -9,20 +9,24 @@ import (
 )
 
 type MongoDBUserRepository struct {
-	mongoClient *mongo.Client
+	userCollection *mongo.Collection
 }
 
-func NewMongoDBUserRepository(mongoClient *mongo.Client) *MongoDBCryptoRepository {
-	return &MongoDBCryptoRepository{mongoClient: mongoClient}
+func NewMongoDBUserRepository(mongoClient *mongo.Client) *MongoDBUserRepository {
+	database := mongoClient.Database("cryptovote")
+
+	usersCollection := database.Collection("users")
+
+	return &MongoDBUserRepository{
+		userCollection: usersCollection,
+	}
 }
 
-func (m MongoDBCryptoRepository) GetByName(ctx context.Context, name string) (domain.User, error) {
-
-	usersCollection := m.mongoClient.Database("cryptovote").Collection("users")
+func (m MongoDBUserRepository) GetByName(ctx context.Context, name string) (domain.User, error) {
 
 	var user domain.User
 
-	result := usersCollection.FindOne(ctx, bson.M{"username": name})
+	result := m.userCollection.FindOne(ctx, bson.M{"username": name})
 
 	err := result.Decode(&user)
 

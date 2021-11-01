@@ -22,7 +22,7 @@ var (
 )
 
 func main() {
-	fmt.Println("Hello Go")
+	fmt.Println("Crypto Vote Service")
 	server = grpc.NewServer()
 
 	initializeListener()
@@ -70,7 +70,7 @@ func initializeListener() {
 		panic(msg)
 	}
 
-	fmt.Printf("Server Listening on %v:%v", server, port)
+	fmt.Printf("Server Listening on %v:%v \n", server, port)
 
 }
 
